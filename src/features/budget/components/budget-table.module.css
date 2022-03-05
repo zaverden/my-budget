@@ -1,0 +1,60 @@
+table.budget-table {
+  font-family: monospace;
+}
+
+table.budget-table,
+table.budget-table tr,
+table.budget-table td {
+  border-spacing: 0;
+}
+
+table.budget-table td {
+  padding-inline: 1ch;
+  padding-block: 0.25em;
+  border-bottom: 1px solid lightblue;
+}
+
+table.budget-table tr.weekend {
+  background-color: rgba(135, 207, 235, 0.2);
+}
+
+table.budget-table tr.today {
+  background-color: rgba(235, 228, 135, 0.5);
+}
+
+.money {
+  text-align: end;
+  padding-inline-start: 2ch;
+}
+
+.spend {
+  color: darkred;
+}
+
+.get {
+  color: darkgreen;
+}
+
+.zero {
+  color: lightgray;
+}
+
+button.more {
+  border: none;
+  background: none;
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+
+.list {
+  font-family: monospace;
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  right: 0;
+  margin-top: 5px;
+  box-shadow: 5px 5px 15px 5px lightgray;
+  text-align: start;
+}
