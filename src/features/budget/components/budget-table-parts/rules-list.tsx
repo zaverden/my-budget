@@ -1,10 +1,10 @@
-import cn from "classnames";
+import clsx from "clsx";
 import { formatMoney } from "@p-features/budget/utils";
 import { Rule } from "@p-features/rules/rules";
 import CSS from "../budget-table.module.css";
 
 function RuleRow({ rule }: { rule: Rule }) {
-  const deltaClass = cn(CSS.money, {
+  const deltaClass = clsx(CSS.money, {
     [CSS.spend]: rule.delta < 0,
     [CSS.get]: rule.delta > 0,
     [CSS.zero]: rule.delta === 0,
