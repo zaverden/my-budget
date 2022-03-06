@@ -18,9 +18,11 @@
     "baseUrl": "./src",
     "paths": {
       "@p-features/*": ["features/*"],
+      "@p-layouts/*": ["layouts/*"],
 
       "@p/form": ["libs/form.ts"],
       "@p/hooks": ["libs/hooks/_entry.ts"],
+      "@p/page": ["libs/page.tsx"],
       "@p/runtypes": ["libs/runtypes/_entry.ts"],
       "@p/ts": ["libs/ts/_entry.ts"],
       "@p/ui-kit": ["libs/ui-kit/_entry.ts"],

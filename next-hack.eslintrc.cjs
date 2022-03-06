@@ -10,8 +10,8 @@ module.exports = {
   parserOptions: { tsconfigRootDir: __dirname },
   extends: ["next/core-web-vitals", "tsap"],
   rules: {
-    "react/jsx-props-no-spreading": ["error", { exceptions: ["input"] }],
     "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
   },
 
   overrides: [

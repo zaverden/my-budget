@@ -2,12 +2,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import type { NextPage } from "next";
+import { MainLayout } from "@p-layouts/main-layout";
+import { withPageConfig } from "@p/page";
 import Copyright from "../src/Copyright";
 import Link from "../src/Link";
 import ProTip from "../src/ProTip";
 
-const About: NextPage = () => {
+function About() {
   return (
     <Container maxWidth="lg">
       <Box
@@ -26,12 +27,48 @@ const About: NextPage = () => {
           <Button variant="contained" component={Link} noLinkStyle href="/">
             Go to the home page
           </Button>
+          <Button variant="contained" component={Link} noLinkStyle href="/about">
+            Go to the about page
+          </Button>
         </Box>
         <ProTip />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
+        <Copyright />
         <Copyright />
       </Box>
     </Container>
   );
-};
+}
 
-export default About;
+export default withPageConfig(About, {
+  layoutComponent: MainLayout,
+});

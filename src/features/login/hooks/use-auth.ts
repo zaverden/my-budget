@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getAuth, User } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useMemoRef, useOnMount } from "@p/hooks";
@@ -8,18 +8,23 @@ type Auth =
   | {
       user: null;
       initialized: false;
+      signOut(): void;
     }
   | {
       user: User | null;
       initialized: true;
+      signOut(): void;
     };
 
 export function useAuth(mode?: Mode) {
   const router = useRouter();
   const _ = useMemoRef(() => ({ router, mode }), [router, mode]);
+  const signOut = useCallback(() => getAuth().signOut(), []);
+
   const [user, setUser] = useState<Auth>({
     user: null,
     initialized: false,
+    signOut,
   });
 
   useOnMount(() => {
@@ -40,7 +45,7 @@ export function useAuth(mode?: Mode) {
           _.current.router.push(r);
         }
       }
-      setUser({ user: newUser, initialized: true });
+      setUser({ user: newUser, initialized: true, signOut });
     });
   });
 
