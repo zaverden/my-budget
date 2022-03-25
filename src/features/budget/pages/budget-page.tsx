@@ -4,6 +4,8 @@ import { BudgetView } from "@p-features/budget/components/budget-view";
 import { useBudgetCalculator } from "@p-features/budget/hooks/use-budget-calculator";
 import { formatMoney } from "@p-features/budget/utils";
 import { useAuth } from "@p-features/login/hooks/use-auth";
+import { useDialog } from "@p/hooks";
+import { MonthlyExpensesDialogContent } from "../components/monthly-expenses-dialog-content";
 
 function MessagedError(props: { error: Error }) {
   return <pre>{props.error.message}</pre>;
@@ -12,15 +14,16 @@ function MessagedError(props: { error: Error }) {
 export function BudgetPage() {
   const auth = useAuth("redirect-if-anon");
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
+  const [MonthlyExpensesDialog, monthlyExpensesDialogControls] = useDialog<number>();
   const today = useMemo(() => subWeeks(startOfDay(new Date()), 1), []);
   const future = useMemo(() => addMonths(today, 24), [today]);
   const calcQ = useBudgetCalculator(monthlyExpenses);
 
-  const changeMonthlyExpenses = () => {
-    // eslint-disable-next-line no-alert -- meh
-    const meStr = prompt("monthlyExpenses", monthlyExpenses.toString()) || "0";
-    const me = parseInt(meStr, 10);
-    setMonthlyExpenses(Number.isNaN(me) ? 0 : me);
+  const changeMonthlyExpenses = async () => {
+    const res = await monthlyExpensesDialogControls.open();
+    if (res.isRight()) {
+      setMonthlyExpenses(res.value);
+    }
   };
 
   if (!auth.initialized || calcQ.isLoading || calcQ.isIdle) {
@@ -44,6 +47,13 @@ export function BudgetPage() {
           <button type="button" onClick={changeMonthlyExpenses}>
             {formatMoney(monthlyExpenses)}
           </button>
+          <MonthlyExpensesDialog>
+            <MonthlyExpensesDialogContent
+              initial={monthlyExpenses}
+              onCancel={monthlyExpensesDialogControls.cancel}
+              onSubmit={monthlyExpensesDialogControls.submit}
+            />
+          </MonthlyExpensesDialog>
         </p>
         <BudgetView calculator={calculator} start={today} end={future} />
       </div>

@@ -39,6 +39,8 @@
     "typescript": "4.6.2"
   },
   "engines": {
+    "yarn": "use npm!",
+    "pnpm": "use npm!",
     "npm": "8.3.1",
     "node": "16.14.0"
   },

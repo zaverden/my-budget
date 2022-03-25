@@ -21,14 +21,16 @@ export function TopBar() {
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: "flex" }}>
             {pages.map(({ title, href }) => (
-              <NextLink href={href} passHref>
+              <NextLink key={href} href={href} passHref>
                 <Button sx={{ my: 2, color: "white", display: "block" }}>{title}</Button>
               </NextLink>
             ))}
           </Box>
-          {
-            user ? (<Button onClick={signOut} sx={{ my: 2, color: "white", display: "block" }}>logout</Button>): null
-          }
+          {user ? (
+            <Button onClick={signOut} sx={{ my: 2, color: "white", display: "block" }}>
+              logout
+            </Button>
+          ) : null}
         </Toolbar>
       </Container>
     </AppBar>

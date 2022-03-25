@@ -12,3 +12,5 @@ export type None<T> = null | undefined | T;
 export type Undef<T> = undefined | T;
 
 export type StringKeys<T extends Record<string, unknown>> = Extract<keyof T, string>;
+
+export type EmptyObj = Record<string, never>;
