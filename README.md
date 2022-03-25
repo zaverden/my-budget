@@ -1,45 +1,38 @@
-# Next.js with TypeScript example
+# My Budget app
 
-## How to use
+## How to start
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+1. Create Firebase project with [phone auth](https://firebase.google.com/docs/auth/web/phone-auth) and [firestore](https://firebase.google.com/docs/firestore/quickstart) active
+2. [setup environment](#setup-environment)
+3. Install dependencies with `npm i`
+4. Start dev server with `npm run dev`
+5. Open browser `http://localhost:3000`
 
-<!-- #default-branch-switch -->
+## Setup environment
 
-```sh
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs-with-typescript
-cd nextjs-with-typescript
+Create file `.env.local` and copy content of `.env.local.example`
+
+```bash
+cp ./.env.local.example ./.env.local
 ```
 
-Install it and run:
+### Firebase
 
-```sh
-npm install
-npm run dev
-```
+1. Go to [console.firebase.google.com](https://console.firebase.google.com)
+2. Select your project
+3. Open "Project Settings" (cog icon)
+4. On "General" tab scroll down to "Your apps" section
+5. Select web app
 
-or:
+* apiKey => `NEXT_PUBLIC_FIREBASE_API_KEY`
+* projectId => `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+* appId => `NEXT_PUBLIC_FIREBASE_ADD_ID`
+* messagingSenderId => `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
 
-<!-- #default-branch-switch -->
+## Technical details
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-## The idea behind the example
-
-The project uses [Next.js](https://github.com/vercel/next.js), which is a framework for server-rendered React apps.
-It includes `@mui/material` and its peer dependencies, including `emotion`, the default style engine in MUI v5. If you prefer, you can [use styled-components instead](https://mui.com/guides/interoperability/#styled-components).
-
-## The link component
-
-Next.js has [a custom Link component](https://nextjs.org/docs/api-reference/next/link).
-The example folder provides adapters for usage with MUI.
-More information [in the documentation](https://mui.com/guides/routing/#next-js).
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/getting-started/templates/) section.
+1. Firebase for client auth and data storage
+2. Based on Next JS (at the moment - only client side)
+3. Feature-slice project structure
+4. Zero-trust policy for data from API - check structure when getting data
+5. Either monad for passing errors through data flows
