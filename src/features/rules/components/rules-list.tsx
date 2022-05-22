@@ -21,10 +21,7 @@ export function RulesList({ rules }: RulesListProps) {
               {JSON.stringify(
                 {
                   id: rule.id,
-                  name: rule.data.name,
-                  delta: rule.data.delta,
-                  startDate: rule.data.startDate,
-                  endDate: rule.data.endDate,
+                  ...rule.data,
                 },
                 null,
                 2
