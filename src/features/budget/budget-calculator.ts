@@ -20,10 +20,18 @@ export class BudgetCalculator {
 
   private _dailyExpenses: number;
 
+  private _expensesFromDate: Date;
+
   private _calculated = new Map<number, DateDelta>();
 
-  constructor(initialAmount: InitialAmount, rules: Rule[], dailyExpenses: number) {
+  constructor(
+    initialAmount: InitialAmount,
+    rules: Rule[],
+    dailyExpenses: number,
+    expensesFromDate: Date
+  ) {
     this._dailyExpenses = dailyExpenses;
+    this._expensesFromDate = expensesFromDate;
     this._rules = rules;
     this._initialDate = parseISO(initialAmount.startDate);
     this._calculated.set(this._initialDate.getTime(), {
@@ -60,8 +68,9 @@ export class BudgetCalculator {
     const lastDelta = this._calculated.get(this._lastProcessedDate.getTime())!;
     const dayRules = this._rules.filter((rule) => isRuleMatch(nextDay, rule));
     const delta = dayRules.reduce((acc, rule) => acc + rule.delta, 0);
+    const dayExpenses = nextDay >= this._expensesFromDate ? this._dailyExpenses : 0;
     const budgetAtStart = lastDelta.budgetAtEnd;
-    const budgetAtEnd = budgetAtStart + delta - this._dailyExpenses;
+    const budgetAtEnd = budgetAtStart + delta - dayExpenses;
 
     this._calculated.set(nextDay.getTime(), {
       date: nextDay,
@@ -74,7 +83,8 @@ export class BudgetCalculator {
 
   static create(
     rules: Rule[],
-    monthlyExpenses = 0
+    monthlyExpenses: number,
+    expensesFromDate: Date
   ): Either<MissingInitialAmountError, BudgetCalculator> {
     const initials = rules
       .filter(InitialAmountSchema.guard)
@@ -84,6 +94,6 @@ export class BudgetCalculator {
       return left(new MissingInitialAmountError());
     }
 
-    return right(new BudgetCalculator(initials[0], rules, monthlyExpenses / 30));
+    return right(new BudgetCalculator(initials[0], rules, monthlyExpenses / 30, expensesFromDate));
   }
 }
