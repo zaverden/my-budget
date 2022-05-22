@@ -27,7 +27,7 @@
       "@p/ts": ["libs/ts/_entry.ts"],
       "@p/ui-kit": ["libs/ui-kit/_entry.ts"],
       "@p/utils": ["libs/utils/_entry.ts"],
-      "@p/yup": ["libs/yup.ts"]
+      "@p/yup": ["libs/yup/_entry.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

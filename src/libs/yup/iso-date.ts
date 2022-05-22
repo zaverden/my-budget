@@ -15,5 +15,3 @@ Y.addMethod(Y.string, "isoDate", function isoDate() {
     test: (str: string | undefined) => !str || isMatch(str, ISO_DATE_FORMAT),
   });
 });
-
-export { Y };
