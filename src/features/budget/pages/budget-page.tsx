@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Button, IconButton, Stack, Typography } from "@mui/material";
-import { addMonths, startOfWeek, subWeeks } from "date-fns";
+import { startOfWeek, subWeeks } from "date-fns";
 import { BudgetView } from "@p-features/budget/components/budget-view";
 import { useBudgetCalculator } from "@p-features/budget/hooks/use-budget-calculator";
 import { formatMoney } from "@p-features/budget/utils";
@@ -18,7 +18,6 @@ export function BudgetPage() {
   const [monthlyExpenses, setMonthlyExpenses] = useState(100_000_00);
   const [MonthlyExpensesDialog, monthlyExpensesDialogControls] = useDialog<number>();
   const [startDate, setStartDate] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
-  const endDate = useMemo(() => addMonths(startDate, 24), [startDate]);
 
   const calcQ = useBudgetCalculator(monthlyExpenses);
 
@@ -63,7 +62,7 @@ export function BudgetPage() {
             />
           </MonthlyExpensesDialog>
         </Stack>
-        <BudgetView calculator={calculator} start={startDate} end={endDate} />
+        <BudgetView calculator={calculator} start={startDate} />
       </Stack>
     ))
     .mapLeft((fail) => {
