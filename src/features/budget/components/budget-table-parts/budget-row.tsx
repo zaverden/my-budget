@@ -23,7 +23,7 @@ export function BudgetRow({ delta }: BudgetRowProps) {
   return (
     <tr className={rowClasses}>
       <td>{format(delta.date, "iii")}</td>
-      <td>{format(delta.date, "MMM dd")}</td>
+      <td className={clsx(CSS.date)}>{format(delta.date, "MMM dd")}</td>
       <td className={clsx(CSS.money)}>{formatMoney(delta.budgetAtEnd)}</td>
       <td className={deltaClasses}>{formatMoney(deltasSum, true)}</td>
       <td>{delta.rules[0]?.name}</td>

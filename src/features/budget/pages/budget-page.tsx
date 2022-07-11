@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
-import { addMonths, startOfDay, subWeeks } from "date-fns";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { addMonths, startOfWeek, subWeeks } from "date-fns";
 import { BudgetView } from "@p-features/budget/components/budget-view";
 import { useBudgetCalculator } from "@p-features/budget/hooks/use-budget-calculator";
 import { formatMoney } from "@p-features/budget/utils";
@@ -13,10 +15,11 @@ function MessagedError(props: { error: Error }) {
 
 export function BudgetPage() {
   const auth = useAuth("redirect-if-anon");
-  const [monthlyExpenses, setMonthlyExpenses] = useState(0);
+  const [monthlyExpenses, setMonthlyExpenses] = useState(100_000_00);
   const [MonthlyExpensesDialog, monthlyExpensesDialogControls] = useDialog<number>();
-  const today = useMemo(() => subWeeks(startOfDay(new Date()), 1), []);
-  const future = useMemo(() => addMonths(today, 24), [today]);
+  const [startDate, setStartDate] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
+  const endDate = useMemo(() => addMonths(startDate, 24), [startDate]);
+
   const calcQ = useBudgetCalculator(monthlyExpenses);
 
   const changeMonthlyExpenses = async () => {
@@ -25,6 +28,8 @@ export function BudgetPage() {
       setMonthlyExpenses(res.value);
     }
   };
+
+  const moveToPast = () => setStartDate((d) => subWeeks(d, 1));
 
   if (!auth.initialized || calcQ.isLoading || calcQ.isIdle) {
     return <h1>Loading...</h1>;
@@ -41,12 +46,15 @@ export function BudgetPage() {
 
   const contentE = calcQ.data
     .mapRight((calculator) => (
-      <div>
-        <h1>Budget</h1>
-        <p>
-          <button type="button" onClick={changeMonthlyExpenses}>
-            {formatMoney(monthlyExpenses)}
-          </button>
+      <Stack px={2} gap={1}>
+        <Typography variant="h2">Budget</Typography>
+        <Stack direction="row" gap={2}>
+          <Button variant="outlined" type="button" onClick={changeMonthlyExpenses}>
+            Monthly expenses: {formatMoney(monthlyExpenses)}
+          </Button>
+          <IconButton color="primary" onClick={moveToPast}>
+            <ArrowUpwardIcon /> past week <ArrowUpwardIcon />
+          </IconButton>
           <MonthlyExpensesDialog>
             <MonthlyExpensesDialogContent
               initial={monthlyExpenses}
@@ -54,9 +62,9 @@ export function BudgetPage() {
               onSubmit={monthlyExpensesDialogControls.submit}
             />
           </MonthlyExpensesDialog>
-        </p>
-        <BudgetView calculator={calculator} start={today} end={future} />
-      </div>
+        </Stack>
+        <BudgetView calculator={calculator} start={startDate} end={endDate} />
+      </Stack>
     ))
     .mapLeft((fail) => {
       if (fail instanceof Error) {

@@ -6,6 +6,7 @@ table.budget-table,
 table.budget-table tr,
 table.budget-table td {
   border-spacing: 0;
+  width: 0;
 }
 
 table.budget-table td {
@@ -20,6 +21,10 @@ table.budget-table tr.weekend {
 
 table.budget-table tr.today {
   background-color: rgba(235, 228, 135, 0.5);
+}
+
+.date {
+  white-space: nowrap;
 }
 
 .money {
